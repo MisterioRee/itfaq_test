@@ -1,0 +1,24 @@
+{
+  "employees": [
+    {
+      "id": "4yS11HHS-",
+      "firstName": "Ali",
+      "lastName": "Shah",
+      "createDate": "2020-05-05T00:00:00.000Z",
+      "dob": "2000-05-05T00:00:00.000Z",
+      "salary": 123.01,
+      "gender": false,
+      "status": false
+    },
+    {
+      "id": "4ySHHHS-",
+      "firstName": "Shah",
+      "lastName": "Khalid",
+      "createDate": "2020-05-05T00:00:00.000Z",
+      "dob": "2000-05-05T00:00:00.000Z",
+      "salary": 123.01,
+      "gender": false,
+      "status": false
+    }
+  ]
+}

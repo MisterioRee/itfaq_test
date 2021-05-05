@@ -1,11 +1,21 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
-const swaggerUI = require('swagger-ui-express');
-const swaggerDocs = require('./swaggerDoc.js');
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+const employeeRoutes = require('./api/routes/employee');
+const bodyParser = require('body-parser'); // Middleware
+
+// Local Database
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
+const adapter = new FileSync("db.json");
+const db = low(adapter);
+db.defaults({ employees: [] }).write();
+app.db = db;
 
 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 ////CORS 
 app.use((req, res, next) => {
@@ -18,39 +28,11 @@ app.use((req, res, next) => {
     next();
 });
 
-//Employees Route
-/**
- * @swagger
- * /api/employee:
- *  get:
- *      description: Get employess
- *      responses:
- *          200:
- *            description: success
- */
-app.use('/api/employee', (req, res, next) => {
-    res.status(200).json({
-        message: "Employees..!"
-    });
-});
-
-
-//Info Route
-app.use('/api/info', (req, res, next) => {
-    res.status(200).json({
-        version: process.env.version || 1.0,
-        description: "ITFAQ Systems Node.js API",
-    });
-});
+app.use('/api/employee', employeeRoutes);
 
 
 
-// Home route
-app.use((req, res, next) => {
-    const error = new Error('No Route Found');
-    error.status = 404;
-    next(error);
-})
+
 
 app.use((error, req, res, next) => {
     res.status(error.status || 500);
