@@ -48,12 +48,7 @@ app.use((req, res, next) => {
 app.use('/api/employee', employeeRoutes);
 
 
-//404 requests
-app.use((req, res, next) => {
-    const error = new Error('Not Found');
-    error.status = 404;
-    next(error);
-})
+
 
 //Invalid routes
 app.use((error, req, res, next) => {
